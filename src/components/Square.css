@@ -1,0 +1,15 @@
+.square {
+    display: inline;
+    height: 100%;
+    width: 100%;
+    border: 1px;
+    color: black;
+}
+
+.light {
+    background-color: white;
+}
+
+.dark {
+    background-color: green
+}
