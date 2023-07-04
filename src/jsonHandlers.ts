@@ -1,7 +1,8 @@
 import { BaseDirectory, readTextFile, writeTextFile } from "@tauri-apps/api/fs";
 
 export async function getJSON(file: string): Promise<Record<string, any>>{
-    const boardJSON: string = await readTextFile(`${file}.json`, { dir: BaseDirectory.App });
+    let boardJSON: string = "";
+    setTimeout(() => readTextFile(`${file}.json`, { dir: BaseDirectory.App }).then(res => boardJSON = res), 1000);
     return JSON.parse(boardJSON)
 }
 

@@ -22,25 +22,27 @@ export default class Game {
 
     async move(): Promise<void> {
         // update move.json
-        const {from, to, turn} = await getJSON("move");
-        if (turn === "white") await setJSON("move", {turn: "black", from: "", to: ""});
-        else await setJSON("move", {turn: "white", from: "", to: ""});
+        try {
+            const {from, to, turn} = await getJSON("move");
+            if (turn === "white") await setJSON("move", {turn: "black", from: "", to: ""});
+            else await setJSON("move", {turn: "white", from: "", to: ""});
+            
+            const piece = this.board[from];
+            
+            // update takes.json
+            if (this.board[to]) setJSON("takes", {takes: true});
+            else if (piece.piece !== "pawn") setJSON("takes", {takes: false});
+
+            // update board
+            delete this.board[from];
+            this.board[to] = piece;
+
+            // update board.json
+            await this.updateBoardJSON();
+        } catch (e) {
+            await this.move();
+        }
         
-        const piece = this.board[from];
-        
-        // update takes.json
-        if (this.board[to]) setJSON("takes", {takes: true});
-        else if (piece.piece !== "pawn") setJSON("takes", {takes: false});
-
-        // e
-
-        // update board
-        delete this.board[from];
-        this.board[to] = piece;
-
-
-        // update board.json
-        await this.updateBoardJSON();
     }
 
     isCheck(): boolean {

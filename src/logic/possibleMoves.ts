@@ -25,12 +25,12 @@ export function possibleMovesPawn(board: any, position: string, color: string): 
             moves.push(`${file}${rank+1}`);
             setJSON("takes", {takes: false});
         }
-        // check front left
-        if (board[`${String.fromCharCode(file.charCodeAt(0)-1)}${rank+1}`] || double_pawn[position] === `${String.fromCharCode(file.charCodeAt(0)-1)}${rank+1}`) {
+        // check front left && enpassant
+        if (board[`${String.fromCharCode(file.charCodeAt(0)-1)}${rank+1}`] || double_pawn[position] === `${String.fromCharCode(file.charCodeAt(0)-1)}${rank}`) {
             moves.push(`${String.fromCharCode(file.charCodeAt(0)-1)}${rank+1}`);
         }
-        // check front right
-        if (board[`${String.fromCharCode(file.charCodeAt(0)+1)}${rank+1}`] || double_pawn[position] === `${String.fromCharCode(file.charCodeAt(0)+1)}${rank+1}`) {
+        // check front right & en passant
+        if (board[`${String.fromCharCode(file.charCodeAt(0)+1)}${rank+1}`] || double_pawn[position] === `${String.fromCharCode(file.charCodeAt(0)+1)}${rank}`) {
             moves.push(`${String.fromCharCode(file.charCodeAt(0)+1)}${rank+1}`);
         }
         // check double pawn move
@@ -40,7 +40,7 @@ export function possibleMovesPawn(board: any, position: string, color: string): 
             setJSON("takes", {takes: false});
         }
     } 
-        
+
     // move options for black
     else {
         // check front straight
